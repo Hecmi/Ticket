@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Sistema de Gestión de Tickets
 
 Este proyecto es una aplicación Fullstack desarrollada como prueba técnica, enfocada en la robustez, buenas prácticas de desarrollo (Clean Architecture). Permite la creación, seguimiento y asignación de tickets de soporte, e incluye un sistema completo de Control de Acceso Basado en Roles (RBAC).
