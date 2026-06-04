@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Sistema de Gestión de Tickets
 
 Este proyecto es una aplicación Fullstack desarrollada como prueba técnica, enfocada en la robustez, buenas prácticas de desarrollo (Clean Architecture). Permite la creación, seguimiento y asignación de tickets de soporte, e incluye un sistema completo de Control de Acceso Basado en Roles (RBAC).
@@ -96,3 +97,6 @@ cd frontend
 npm run test -- --coverage
 ```
 El reporte interactivo se generará en la carpeta `frontend/coverage/frontend/index.html`. Puedes abrir este archivo directamente en tu navegador para ver la línea exacta que está o no cubierta por las pruebas.
+=======
+# Ticket
+>>>>>>> 5be1ff8d582adb72ffaccfb2059a357f731ed7ac
