@@ -96,7 +96,3 @@ Para generar el reporte de **Cobertura de Código** (>80%):
 cd frontend
 npm run test -- --coverage
 ```
-El reporte interactivo se generará en la carpeta `frontend/coverage/frontend/index.html`. Puedes abrir este archivo directamente en tu navegador para ver la línea exacta que está o no cubierta por las pruebas.
-=======
-# Ticket
->>>>>>> 5be1ff8d582adb72ffaccfb2059a357f731ed7ac
