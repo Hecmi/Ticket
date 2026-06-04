@@ -1,0 +1,1 @@
+Lee el archivo prisma/schema.prisma y genera el archivo prisma.config.ts

@@ -1,0 +1,1 @@
+Genera schema.prisma para PostgreSQL usando exactamente las tablas del MER definido.

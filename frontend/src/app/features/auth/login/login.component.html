@@ -1,0 +1,48 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <div mat-card-avatar class="auth-avatar">
+        <mat-icon>lock_outline</mat-icon>
+      </div>
+      <mat-card-title>Welcome Back</mat-card-title>
+      <mat-card-subtitle>Sign in to your account</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="auth-form">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email address</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Ex. user@viamatica.com">
+          <mat-icon matPrefix>email</mat-icon>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('required')">Email is required</mat-error>
+          <mat-error *ngIf="loginForm.get('email')?.hasError('email')">Please enter a valid email</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+          <mat-icon matPrefix>vpn_key</mat-icon>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassword">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="loginForm.get('password')?.hasError('minlength')">Minimum 6 characters</mat-error>
+        </mat-form-field>
+
+        <div class="actions">
+          <mat-error *ngIf="errorMessage" style="margin-bottom: 1rem; display: block; text-align: center;">{{ errorMessage }}</mat-error>
+          <button mat-flat-button color="primary" type="submit" class="submit-btn" [disabled]="loginForm.invalid">
+            SIGN IN
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-footer>
+      <p class="footer-text">
+        Don't have an account? <a routerLink="/register">Create one here</a>
+      </p>
+    </mat-card-footer>
+  </mat-card>
+</div>

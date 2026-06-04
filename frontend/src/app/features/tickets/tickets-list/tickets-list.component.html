@@ -1,0 +1,62 @@
+
+<div class="tickets-container">
+  <div class="header-actions">
+    <h1>Support Tickets</h1>
+    <div class="action-buttons">
+      <button mat-button class="premium-btn" *ngIf="isAdmin()" routerLink="/admin/permissions">
+        <mat-icon>security</mat-icon> PERMISOS
+      </button>
+      <button mat-flat-button class="premium-btn-primary" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon> CREATE TICKET
+      </button>
+      <button mat-icon-button class="logout-btn" (click)="logout()" title="Cerrar sesión">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="loading-state" *ngIf="isLoading">
+    <p>Loading tickets...</p>
+  </div>
+
+  <div class="tickets-grid" *ngIf="!isLoading">
+    <mat-card class="ticket-card" *ngFor="let ticket of tickets">
+      <mat-card-header>
+        <mat-card-title>{{ ticket.title }}</mat-card-title>
+        <mat-card-subtitle>{{ ticket.createdAt | date:'medium' }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <p class="ticket-desc">{{ ticket.description }}</p>
+        
+        <div class="ticket-meta">
+          <mat-chip-set>
+            <mat-chip [color]="ticket.status === 'CLOSED' ? 'warn' : 'primary'" highlighted>
+              Status: {{ ticket.status }}
+            </mat-chip>
+            <mat-chip [color]="getPriorityColor(ticket.priority)" highlighted>
+              Priority: {{ ticket.priority }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions class="card-actions">
+        <button mat-button color="primary" [routerLink]="['/tickets', ticket.id]">
+          VIEW DETAILS
+        </button>
+        <button mat-button color="accent" (click)="openPriorityDialog(ticket)" [disabled]="ticket.status === 'CLOSED'">
+          CHANGE PRIORITY
+        </button>
+        <button mat-button color="warn" (click)="openCloseConfirmDialog(ticket)" [disabled]="ticket.status === 'CLOSED'">
+          CLOSE TICKET
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  
+  <div class="empty-state" *ngIf="!isLoading && tickets.length === 0">
+    <mat-icon>assignment</mat-icon>
+    <p>No tickets found. Create one to get started!</p>
+  </div>
+</div>

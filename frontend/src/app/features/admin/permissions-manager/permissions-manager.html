@@ -1,0 +1,50 @@
+<div class="permissions-container" *ngIf="!isLoading">
+  <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+    <h1 style="margin-bottom: 0;">Gestión de Roles y Permisos (RBAC)</h1>
+    <button mat-button color="accent" routerLink="/tickets">
+      <mat-icon>arrow_back</mat-icon> Regresar a Tickets
+    </button>
+  </div>
+  
+  <mat-card class="selector-card">
+    <mat-card-header>
+      <mat-card-title>Seleccionar Perfil</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="profiles-list">
+        <button mat-flat-button 
+                *ngFor="let profile of profiles" 
+                [color]="selectedProfileId === profile.id ? 'primary' : ''"
+                (click)="onProfileSelect(profile.id)"
+                class="profile-btn">
+          {{ profile.name }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <mat-card class="permissions-card" *ngIf="selectedProfile">
+    <mat-card-header>
+      <mat-card-title>Permisos de {{ selectedProfile.name }}</mat-card-title>
+      <mat-card-subtitle>Marca las casillas para asignar o remover permisos al rol.</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="options-grid">
+        <div class="option-item" *ngFor="let option of options">
+          <mat-checkbox 
+            [checked]="hasOption(option.id)" 
+            (change)="toggleOption(option.id, $event)">
+            <strong>{{ option.name }}</strong> ({{ option.code }})
+          </mat-checkbox>
+        </div>
+      </div>
+      <div class="actions-row" style="margin-top: 20px; text-align: right;">
+        <button mat-flat-button color="primary" (click)="savePermissions()">
+          Asignar Permisos
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div *ngIf="isLoading" class="loading">Cargando roles y permisos...</div>

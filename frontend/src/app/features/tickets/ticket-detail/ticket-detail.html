@@ -1,0 +1,80 @@
+<div class="ticket-detail-container" *ngIf="!isLoading && ticket">
+  <div class="header">
+    <button mat-icon-button routerLink="/tickets"><mat-icon>arrow_back</mat-icon></button>
+    <h1>{{ ticket.title }}</h1>
+    <mat-chip-set>
+      <mat-chip [color]="ticket.status === 'CLOSED' ? 'warn' : 'primary'" highlighted>{{ ticket.status }}</mat-chip>
+      <mat-chip color="accent" highlighted>{{ ticket.priority }}</mat-chip>
+    </mat-chip-set>
+  </div>
+
+  <mat-card class="desc-card">
+    <mat-card-header>
+      <mat-card-title>Descripción del Ticket</mat-card-title>
+      <mat-card-subtitle>Creado por {{ ticket.creator?.email }} el {{ ticket.createdAt | date:'short' }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ ticket.description }}</p>
+    </mat-card-content>
+  </mat-card>
+
+  <div class="split-view">
+    <div class="left-col">
+      <mat-card class="comments-card">
+        <mat-card-header>
+          <mat-card-title>Comentarios</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="comment-list">
+            <div *ngFor="let comment of comments" class="comment-item">
+              <strong>{{ comment.user?.email }}:</strong> 
+              <span>{{ comment.content }}</span>
+              <small>{{ comment.createdAt | date:'short' }}</small>
+            </div>
+            <p *ngIf="comments.length === 0">No hay comentarios aún.</p>
+          </div>
+          
+          <form [formGroup]="commentForm" (ngSubmit)="addComment()" class="comment-form">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Agregar un comentario...</mat-label>
+              <textarea matInput formControlName="content" rows="2"></textarea>
+            </mat-form-field>
+            <button mat-flat-button color="primary" type="submit" [disabled]="commentForm.invalid">Comentar</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="right-col" *ngIf="canAssign()">
+      <mat-card class="assignments-card">
+        <mat-card-header>
+          <mat-card-title>Asignaciones</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="assignment-list">
+            <div *ngFor="let a of assignments" class="assign-item">
+              <mat-icon>person</mat-icon> {{ a.assignee?.email }} ({{ a.assignee?.profile?.name }})
+            </div>
+            <p *ngIf="assignments.length === 0">Sin asignar.</p>
+          </div>
+          
+          <form [formGroup]="assignForm" (ngSubmit)="assignTicket()" class="assign-form">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Asignar a...</mat-label>
+              <mat-select formControlName="assigneeId">
+                <mat-option *ngFor="let u of users" [value]="u.id">
+                  {{ u.email }} ({{ u.profile?.name }})
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-flat-button color="accent" type="submit" [disabled]="assignForm.invalid">Asignar Ticket</button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isLoading" class="loading-state">
+  <p>Cargando detalles...</p>
+</div>

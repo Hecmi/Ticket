@@ -1,0 +1,64 @@
+<div class="auth-container">
+  <mat-card class="auth-card">
+    <mat-card-header>
+      <div mat-card-avatar class="auth-avatar">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <mat-card-title>Create Account</mat-card-title>
+      <mat-card-subtitle>Join our platform today</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="auth-form">
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Full Name</mat-label>
+          <input matInput formControlName="name" type="text" placeholder="John Doe">
+          <mat-icon matPrefix>person</mat-icon>
+          <mat-error *ngIf="registerForm.get('name')?.hasError('required')">Name is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email" placeholder="Ex. correo@empresa.com">
+          <mat-error *ngIf="registerForm.get('email')?.hasError('required')">El correo es obligatorio</mat-error>
+          <mat-error *ngIf="registerForm.get('email')?.hasError('email')">Formato de correo inválido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Perfil / Rol</mat-label>
+          <mat-select formControlName="role">
+            <mat-option *ngFor="let profile of profiles" [value]="profile.name">
+              {{ profile.name }}
+            </mat-option>
+            <mat-option *ngIf="profiles.length === 0" value="CLIENTE">CLIENTE (Default)</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Password</mat-label>
+          <input matInput formControlName="password" [type]="hidePassword ? 'password' : 'text'">
+          <mat-icon matPrefix>vpn_key</mat-icon>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          <mat-error *ngIf="registerForm.get('password')?.hasError('required')">Password is required</mat-error>
+          <mat-error *ngIf="registerForm.get('password')?.hasError('minlength')">Minimum 6 characters</mat-error>
+        </mat-form-field>
+
+        <div class="actions">
+          <mat-error *ngIf="errorMessage" style="margin-bottom: 1rem; display: block; text-align: center;">{{ errorMessage }}</mat-error>
+          <button mat-flat-button color="primary" type="submit" class="submit-btn" [disabled]="registerForm.invalid">
+            CREATE ACCOUNT
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+
+    <mat-card-footer>
+      <p class="footer-text">
+        Already have an account? <a routerLink="/login">Log in here</a>
+      </p>
+    </mat-card-footer>
+  </mat-card>
+</div>
