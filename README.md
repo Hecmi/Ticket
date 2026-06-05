@@ -95,3 +95,9 @@ Para generar el reporte de **Cobertura de Código** (>80%):
 cd frontend
 npm run test -- --coverage
 ```
+<img width="1027" height="702" alt="Captura de pantalla 2026-06-04 200444" src="https://github.com/user-attachments/assets/ce2963a4-4795-421a-84a2-3deb5b6d126c" />
+
+<img width="1527" height="671" alt="Captura de pantalla 2026-06-04 200603" src="https://github.com/user-attachments/assets/9ca6c035-3511-4a84-bd81-612dd5725c02" />
+
+<img width="1289" height="673" alt="Captura de pantalla 2026-06-04 200634" src="https://github.com/user-attachments/assets/b5da5335-dab6-46ce-9833-acd917451535" />
+
